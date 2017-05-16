@@ -28,7 +28,7 @@ void ofApp::draw(){
     
     if(p.size() > 0){
         int radius = size/2;
-        
+        int count = 0;
         for (int y = 0; y < heightSize; y++) {
             for (int x = 0; x < widthSize; x++) {
                 float rx = ofGetWidth() - (x*size + radius);//mirror
@@ -37,7 +37,26 @@ void ofApp::draw(){
                 int cx = (int)ofMap(x * radius, 0, ofGetWidth()/2, gap, 640 - gap);
                 int cy = (int)ofMap(y * radius, 0, ofGetHeight()/2, 0, 480);
                 ofSetColor(p.getColor(cx, cy));
-                ofDrawCircle(rx, ry, radius);
+                switch (count) {
+                    case 0:
+                        ofDrawCircle(rx, ry, radius);
+                        break;
+                        
+                    case 1:
+                        ofDrawRectangle(rx, ry, radius, radius);
+                        break;
+                        
+                    case 2:
+                        ofDrawLine(rx, ry, rx + radius, ry + radius);
+                        break;
+                        
+                    case 3:
+                        ofDrawRectangle(rx - radius, ry - radius, radius*2, radius*2);
+                        break;
+                        
+                }
+                count++;
+                if(count > 4) count = 0;
             }
         }
         
